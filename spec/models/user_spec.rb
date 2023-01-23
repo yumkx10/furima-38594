@@ -98,7 +98,6 @@ RSpec.describe User, type: :model do
       it 'family_name_kanaが空だと登録できない' do
         @user.family_name_kana = ''
         @user.valid?
-        binding.pry
         expect(@user.errors.full_messages).to include("Family name kana can't be blank")
       end
       it 'first_name_kanaが空だと登録できない' do
