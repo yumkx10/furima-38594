@@ -18,6 +18,8 @@ class Item < ApplicationRecord
       validates :category_id, :condition_id, :shipping_fee_id, :prefecture_id, :shipping_day_id
     end
 
+    PRICE_REGEX = /[0-9]+\d/.freeze
+    validates_format_of :price, with: PRICE_REGEX, message: 'is invalid. Input half-width characters'
     validates :price, numericality: { only_integer: true, greater_than: 299, less_than: 10000000, message: 'is out of setting range' }
   end
 end

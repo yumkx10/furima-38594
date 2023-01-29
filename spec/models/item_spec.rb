@@ -62,7 +62,7 @@ describe Item, type: :model do
       it 'priceが半角数字以外では登録できない' do
         @item.price = "１０００"
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is out of setting range")
+        expect(@item.errors.full_messages).to include("Price is invalid. Input half-width characters")
       end
       it 'priceが300より少ないと登録できない' do
         @item.price = "50"
