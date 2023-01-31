@@ -62,17 +62,17 @@ describe Item, type: :model do
       it 'priceが半角数字以外では登録できない' do
         @item.price = "１０００"
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is invalid. Input half-width characters")
+        expect(@item.errors.full_messages).to include("Price is not a number")
       end
       it 'priceが300より少ないと登録できない' do
         @item.price = "50"
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is out of setting range")
+        expect(@item.errors.full_messages).to include("Price must be greater than 299")
       end
       it 'priceが9999999より多いと登録できない' do
         @item.price = "10000000"
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is out of setting range")
+        expect(@item.errors.full_messages).to include("Price must be less than 10000000")
       end
       it 'ユーザーが紐付いていなければ出品できない' do
         @item.user = nil
