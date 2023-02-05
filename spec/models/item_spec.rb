@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Item, type: :model do
-
   before do
     @item = FactoryBot.build(:item)
   end
@@ -28,17 +27,17 @@ describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Description can't be blank")
       end
-        it 'category_idが「---」では登録されない' do
+      it 'category_idが「---」では登録されない' do
         @item.category_id = '0'
         @item.valid?
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
-        it 'condition_idが「---」では登録されない' do
+      it 'condition_idが「---」では登録されない' do
         @item.condition_id = '0'
         @item.valid?
         expect(@item.errors.full_messages).to include("Condition can't be blank")
       end
-        it 'shipping_fee_idが「---」では登録されない' do
+      it 'shipping_fee_idが「---」では登録されない' do
         @item.shipping_fee_id = '0'
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping fee can't be blank")
@@ -53,26 +52,26 @@ describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping day can't be blank")
       end
-      
+
       it 'priceが空では登録されない' do
-        @item.price = ""
+        @item.price = ''
         @item.valid?
         expect(@item.errors.full_messages).to include("Price can't be blank")
       end
       it 'priceが半角数字以外では登録できない' do
-        @item.price = "１０００"
+        @item.price = '１０００'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is not a number")
+        expect(@item.errors.full_messages).to include('Price is not a number')
       end
       it 'priceが300より少ないと登録できない' do
-        @item.price = "50"
+        @item.price = '50'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be greater than 299")
+        expect(@item.errors.full_messages).to include('Price must be greater than 299')
       end
       it 'priceが9999999より多いと登録できない' do
-        @item.price = "10000000"
+        @item.price = '10000000'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be less than 10000000")
+        expect(@item.errors.full_messages).to include('Price must be less than 10000000')
       end
       it 'ユーザーが紐付いていなければ出品できない' do
         @item.user = nil
