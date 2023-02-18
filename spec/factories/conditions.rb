@@ -1,4 +1,5 @@
 FactoryBot.define do
-  factory :destination do
+  factory :condition do
+    
   end
 end
