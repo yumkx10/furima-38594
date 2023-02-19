@@ -2,20 +2,14 @@ require 'rails_helper'
 
 RSpec.describe OrderDestination, type: :model do
   before do
-    @order_destination = FactoryBot.build(:order_destination)
+    @user = FactoryBot.create(:user)
+    @item = FactoryBot.create(:item)
+    @order_destination = FactoryBot.build(:order_destination, user_id: @user.id, item_id: @item.id)
   end
 
   describe '配送先情報の保存' do
     context '配送先情報の保存ができるとき' do
       it 'すべての項目が正しく入力されていれば保存できる' do
-        expect(@order_destination).to be_valid
-      end
-      it 'user_idが空でなければ保存できる' do
-        @order_destination.user_id = 1
-        expect(@order_destination).to be_valid
-      end
-      it 'item_idが空でなければ保存できる' do
-        @order_destination.item_id = 1
         expect(@order_destination).to be_valid
       end
       it '郵便番号が「3桁＋ハイフン＋4桁」の組み合わせであれば保存できる' do
@@ -96,7 +90,12 @@ RSpec.describe OrderDestination, type: :model do
         expect(@order_destination.errors.full_messages).to include('Phone number is invalid')
       end
       it '電話番号が12桁以上あると保存できないこと' do
-        @order_destination.phone_number = 12_345_678_910_123_111
+        @order_destination.phone_number = "090123456789"
+        @order_destination.valid?
+        expect(@order_destination.errors.full_messages).to include('Phone number is invalid')
+      end
+      it '電話番号が9桁以下あると保存できないこと' do
+        @order_destination.phone_number = "090123456"
         @order_destination.valid?
         expect(@order_destination.errors.full_messages).to include('Phone number is invalid')
       end
